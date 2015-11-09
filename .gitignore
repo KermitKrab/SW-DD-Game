@@ -1,3 +1,4 @@
+=begin
 *.gem
 *.rbc
 /.config
@@ -33,3 +34,887 @@ build/
 
 # unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
 .rvmrc
+=end
+
+class Player
+  attr_accessor :attack
+  attr_accessor :defense
+  attr_accessor :speed
+  attr_accessor :force
+  attr_accessor :intelligence
+  attr_accessor :health
+  
+  def initialize
+    @attack = 0
+    @defense = 0
+    @speed = 0
+    @force = 0
+    @intelligence = 0
+    @health = 10
+  end
+  
+  def set_stats(chosen)
+    case chosen
+    when "jedi"
+      @attack = 7
+      @defense = 6
+      @speed = 5
+      @force = 7
+      @intelligence = 9
+    when "ewok"
+      @attack = 4
+      @defense = 2
+      @speed = 7
+      @force = 2
+      @intelligence = 4
+    when "bounty"
+      @attack = 6
+      @defense = 8
+      @speed = 4
+      @force = 4
+      @intelligence = 8
+    when "sith"
+      @attack = 7
+      @defense = 5
+      @speed = 6
+      @force = 8
+      @intelligence = 8
+    when "jawa"
+      @attack = 2
+      @defense = 3
+      @speed = 8
+      @force = 2
+      @intelligence = 9
+    when "twilek"
+      @attack = 5
+      @defense = 6
+      @speed = 7
+      @force = 5
+      @intelligence = 6
+    when "trooper"
+      @attack = 6
+      @defense = 4
+      @speed = 4
+      @force = 3
+      @intelligence = 6
+    end
+  end
+end  #Player class ends here
+
+def fight 
+ if $enemy > 0
+  if  $answer == "jedi"
+    puts "[Stats:]"
+    puts "Attack: 7"
+    puts "Defense: 6"
+    puts "Speed: 5"
+    puts "Force: 7"
+    puts "Intelligence: 9"
+    puts " "
+  elsif $answer == "ewok"
+    puts "[Your Stats:]"
+    puts "Attack: 4"
+    puts "Defense: 2"
+    puts "Speed: 7"
+    puts "Force: 0"
+    puts "Intelligence: 4"
+    puts " "
+  elsif $answer == "bounty"
+    puts "[Your Stats:]"
+    puts "Attack: 6"
+    puts "Defense: 8"
+    puts "Speed: 4"
+    puts "Force: 1"
+    puts "Intelligence: 8"
+    puts " "
+  elsif $answer == "sith"
+    puts "[Your Stats:]"
+    puts "Attack: 7"
+    puts "Defense: 5"
+    puts "Speed: 6"
+    puts "Force: 8"
+    puts "Intelligence: 8"
+    puts " "
+  elsif $answer == "jawa"
+    puts "[Your Stats:]"
+    puts "Attack: 2"
+    puts "Defense: 3"
+    puts "Speed: 8"
+    puts "Force: 0"
+    puts "Intelligence: 9"
+    puts " "
+  elsif $answer == "twilek"
+    puts "[Your Stats:]"
+    puts "Attack: 5"
+    puts "Defense: 6"
+    puts "Speed: 7" 
+    puts "Force: 5"
+    puts "Intelligence: 6"
+    puts " "
+  elsif $answer == "trooper"
+    puts "[Your Stats:]"
+    puts "Attack: 6"
+    puts "Defense: 4"
+    puts "Speed: 4"
+    puts "Force: 3"
+    puts "Intelligence: 6"
+    puts " "
+  end  #End of the 'your stats' strings
+  puts "There is #{$enemy} enemy(s) left."
+  puts "You have #{$player.health} hit point(s) left."
+  puts "*Do you attack (attack), defend (defend), or use force (force)?*"
+  fight1 = gets.strip.downcase
+  if $player.health == 0  #If you're dead this happens
+    puts "YOU HAVE DIED! GAME OVER!"
+    sleep
+  end
+  if $answer == "jedi" #The different choices for fighting starts here 
+    if fight1 == "attack"
+      rand(10)
+      if rand(10) <= $player.attack
+        puts "You slash at them with your lightsaber and take one out"
+        $enemy -= 1
+        fight
+      else
+        puts "You strike but miss your attack"
+        puts "The enemy counters and hits you during this chance, taking 1 hp."
+        $player.health -= 1
+        fight
+      end
+    elsif fight1 == "defend"
+      rand(10)
+        if rand(10) <= $player.defense
+          puts "You blocked the attack and managed to keep yourself safe."
+          fight
+        elsif rand(10) == $player.defense
+          puts "You become aware of the enemy's movements and not only block but counter-attack, taking 1 out."
+          $enemy -= 1
+          fight
+        else
+          puts "You fail the block and take a direct hit, losing 1 hp."
+          $player.health -= 1
+          fight
+        end
+    elsif fight1 == "force"
+      rand(10)
+        if rand(10) <= $player.force
+          puts "You use the force and push one of them into a wall, knocking him out." 
+          $enemy -= 1
+          fight
+        elsif rand(10) == $player.force
+          puts "You focus hard and manage to use the force to repel and knock them all out"
+          $enemy = 0
+          fight
+        else
+          puts "You try to use the force but lose your concentration and leave yourself vulnerable.
+          the enemy uses this chance to strike you, taking 1 hp."
+          $player.health -= 1
+          fight
+        end
+    end
+  elsif $answer == "ewok"
+    if fight1 == "attack"
+      rand(10)
+       if rand(10) <= $player.attack
+         puts "You swing your hammer and hit one of their heads, taking him out."
+         $enemy -= 1
+         fight
+       elsif rand(10) == $player.attack
+         puts "You start spinning nonstop and managed to slam all the enemies unconscious."
+         $enemy = 0
+         fight
+       else 
+         puts "You slam your hammer down, but miss completely. They counter-attack you."
+         $player.health -= 1
+         fight
+       end
+    elsif fight1 == "defend"
+      rand(10)
+        if rand(10) <= $player.defense
+          puts "You managed to barely hold your ground and stop the attack."
+          fight
+        elsif rand(10) == $player.defense
+          puts "You focus hard enough to move out of the way of the attack and counter-attack."
+          $enemy -= 1
+          fight
+        else
+          puts "You were unprepared and take a direct hit to the face. That's gotta hurt."
+          $player.health -= 1
+          fight 
+        end
+    elsif fight1 == "force"
+      rand(10)
+        if rand(10) <= $player.force
+          puts "You don't have experience with the force but somehow you manage to push
+          yourself out of the way of the attack."
+          fight
+        elsif rand(10) == $player.force
+          puts "You focus hard enough to use the force to launch yourself at the enemy, knocking one out."
+          $enemy -= 1
+          fight
+        else
+          puts "What are you thinking? You are an Ewok, you are bad at using the force. You lose 1 hp."
+          $player.health -= 1
+          fight
+        end
+    end
+  elsif $answer == "bounty"
+    if fight1 == "attack"
+      rand(10)
+        if rand(10) <= $player.attack
+          puts "You fire your blaster and take out one of them."
+          $enemy -= 1
+          fight
+        elsif rand(10) == $player.attack
+          puts "You scan the room and precisely angle one shot to hit all of them. Get rekt m8."
+          $enemy = 0
+          fight
+        else 
+          puts "You shoot randomly at the enemies yet somehow manage to bounce a shot off the wall and
+          back at you. You lose 1 hp and the enemies laugh at you."
+          $player.health -= 1
+          fight
+        end
+    elsif fight1 == "defend"
+      rand(10)
+        if rand(10) <= $player.defense
+          puts "You pull up your personal energy shield and deflect their attacks."
+          fight
+        elsif rand(10) == $player.defense
+          puts "You watch the enemy's attack use your shield to parry it and counter them, knocking him out."
+          $enemy -= 1
+          fight
+        else
+          puts "Your energy shield malfunctions and turns off as he attacks you. You get smacked in the face"
+          $player.health -= 1
+          fight
+        end
+    elsif fight1 == "force"
+      rand(10)
+        if rand(10) <= $player.force
+          puts "You use what little force knowledge you have to guide you shot at one of them and hit him."
+          $enemy -= 1
+          fight
+        elsif rand(10) == $player.force
+          puts "You concentrate as much as you can and use the force to guide many shots into each of the enemies.
+          GG enemies, they got rekt hard."
+          $enemy = 0
+          fight
+        else
+          puts "You try your best to focus on your blaster but somehow manage to throw it out of your hand. The 
+          enemies use this chance to hit you"
+          $player.health -= 1
+          fight
+        end
+    end
+  elsif $answer == "sith"
+    if fight1 == "attack"
+       rand(10)
+        if rand(10) <= $player.attack
+          puts "With a grin on your face, you strike down one of the enemies."
+          $enemy -= 1
+          fight
+        elsif rand(10) == $player.attack
+          puts "In a mad rage, you flail your lightsaber all around the enemies and take down each one of them."
+          $enemy = 0
+          fight
+        else
+          puts "You jump and try to strike them, but they move out of the way and hit you."
+          $player.health -= 1
+          fight
+        end
+    elsif fight1 == "defend"
+      rand(10)
+        if rand(10) <= $player.defense
+          puts "You hold a stance with your lightsaber and block each attack they throw at you."
+          fight
+        elsif rand(10) == $player.defense
+          puts "You rapidly spin your lightsaber in a circle with one hand and make a shield.
+          Each attack is parried and countered. You take one out."
+          $enemy -= 1
+          fight
+        else 
+          puts "You try to bring your lightsaber up to defend but it slips out of your hand.
+          The enemies attack you during this time."
+          $player.health -= 1
+          fight
+        end
+    elsif fight1 == "force"
+      rand(10)
+        if rand(10) <= $player.force
+          puts "You push one of the guys into a wall and knock him out."
+          $enemy -= 1
+          fight
+        elsif rand(10) == $player.force
+          puts "You pick up one of them with the force and use him to slam into the other enemies, 
+          taking them all out."
+          $enemy = 0
+          fight
+        else
+          puts "You try to use the force, but get distracted and hit yourself with an object."
+          $player.health -= 1
+          fight
+        end
+    end
+  elsif $answer == "jawa"
+    if fight1 == "attack"
+      rand(10)
+        if rand(10) <= $player.attack
+          puts "You use your tiny Jawa blaster to shoot at one of them. Good thing you hit him."
+          $enemy -= 1
+          fight
+        elsif rand(10) == $player.attack
+          puts "Your random shots fired manage to take out 2 of them."
+          $enemy -= 2
+          fight
+        else
+          puts "You try to shoot but are too intimidated to fire, the enemies take advantage of this
+          and attack you."
+          $player.health -= 1
+          fight
+        end       
+    elsif fight1 == "defend"
+      rand(10)
+        if rand(10) <= $player.defense
+          puts "You watch them and scurry out of the way of their attacks"
+          fight
+        elsif rand(10) == $player.defense
+          puts "You get and electric energy shield working each attack they land on it damages them.
+          One of them get's electrocuted unconscious."
+          $enemy -= 1
+          fight
+        else
+          puts "You try to put put your arms to block but they break right through your defense and
+          hit you."
+          $player.health -= 1
+          fight
+        end
+    elsif fight1 == "force"
+      rand(10)
+        if rand(10) <= $player.force
+          puts "As a Jawa inexperienced in the force, you manage to use it to help you dodge attacks"
+          fight
+        else
+          puts "You have no idea what you are doing and end up using the force to throw rocks everywhere.
+          The only thing you actually hit is yourself, good job."
+          $player.health -= 1
+          fight
+        end
+    end
+  elsif $answer == "twilek"
+    if fight1 == "attack"
+      rand(10)
+        if rand(10) <= $player.attack
+          puts "You strike at them and hit one of them with your sword."
+          $enemy -= 1
+          fight
+        elsif rand(10) == $player.attack
+          puts "You do a spin attack and take out the nearest two enemies."
+          $enemy -= 2
+          fight
+        else
+          puts "You try to swing at them, but they move out of the way and hit you."
+          $player.health -= 1
+          fight
+        end
+    elsif fight1 == "defend"
+      rand(10)
+        if rand(10) <= $player.defense
+          puts "You hold up your sword and deflect each attack."
+          fight
+        elsif rand(10) == $player.defense
+          puts "You hold up a perfect stance then parry and counter each attack, taking one out."
+          $enemy -= 1
+          fight
+        else
+          puts "You try to defend, but get distracted by a butterfly and get hit."
+          $player.health -= 1
+          fight
+        end
+    elsif fight1 == "force"
+      rand(10)
+        if rand(10) <= $player.force
+          puts "You use the force and manage to knock one down"
+          $enemy -= 1
+          fight
+        elsif rand(10) == $player.force
+          puts "You infuse force energy into your sword and strike down two enemies."
+          $enemy -= 2
+          fight
+        else
+          puts "You try to focus on using the force, but you take too long and the enemies attack you."
+          $player.health -= 1
+          fight
+        end
+    end
+  elsif $answer == "trooper"
+    if fight1 == "attack"
+      rand(10)
+        if rand(10) <= $player.attack
+          puts "You aim your shot and shoot one of them down in a couple of hits."
+          $enemy -= 1
+          fight
+        elsif rand(10) == $player.attack
+          puts "You manage to temporarily modify and super-charge your blaster into a small chain-blaster,
+          mowing down all the enemies in your path."
+          $enemy = 0
+          fight
+        else
+          puts "You try to super-charge your weapon but overload it and it breaks in your hands. The enemies strike
+          you and you later reassemble your blaster."
+          $player.health -= 1
+          fight
+        end
+    elsif fight1 == "defend"
+      rand(10)
+        if rand(10) <= $player.defense
+          puts "They try to attack you but the armour on your arms are just enough to completely stop their 
+          attacks."
+          fight
+        elsif rand(10) == $player.defense
+          puts "As they charge at you, you track their movements and use you body armor to parry their strikes and
+          give them a strong punch to the face. One of them gets knocked out."
+          $enemy -=1
+          fight
+        else
+          puts "You try your best to stop their attacks but it's too much. Their repeated strikes stagger
+          you and they strike again when you are vulnerable."
+          $player.health -= 1
+          fight
+        end
+    elsif fight1 == "force"
+      rand(10)
+        if rand(10) <= $player.force
+          puts "You concentrate on using the force but are only able to use it to block the attack."
+        elsif rand(10) == $player.force
+          puts "Somehow, you manage to focus hard enough use the force to push the enemies.
+          You somehow knock them all out."
+          $enemy = 0
+        else 
+          puts "Due to your inexperience in the force, you hold your hands forwards at them to try to make a 
+          shield but are too late and they hit you."
+          $player.health -= 1
+          fight
+        end
+    end
+ else
+   puts "Can you please repeat that command."
+   puts " "
+   fight
+  end
+ else
+   puts "You defeated the enemies"
+  end 
+ end # if $enemy > 0
+
+
+
+$player = Player.new
+$enemy = 0
+
+puts "Hello, welcome to this Star Wars themed D&D game! It works like a regular D&D game and requires only 
+text input. Just try to use the prompts in parenthesis the game gives you. Whether the choice succeeds or
+not depends on your stats. You have 10 hit points and lose one every hit you take."
+puts ' '
+puts "*You have been injured and are floating in a Bacta Tank on a Republic Cruiser. The tank is healing 
+your injuries but the medical droid is confused on who you are.*" 
+puts "What class were you? Jedi (jedi), Ewok (ewok), Bounty Hunter (bounty), Sith (sith), Jawa (jawa), 
+Twi'lek (twilek) Stormtrooper (trooper). Choose wisely."
+
+case @health
+when $player.health == 0
+  puts "GAME OVER"
+  puts "You've lost all your health and died. GG"    
+  sleep
+end
+
+def beginning
+  $answer = gets.strip
+  $player.set_stats($answer)
+
+  if $answer == "jedi"
+    puts "Medical Droid: So you are a Jedi? That's interesting, don't see many of you around here."
+    puts " "
+    puts "[Your stats are:]"
+    puts "Attack: 7"
+    puts "Defense: 6"
+    puts "Speed: 5"
+    puts "Force: 7"
+    puts "Intelligence: 9"
+  elsif $answer == "ewok"
+    puts "Medical Droid: Oh, an Ewok, didn't expect that. You are really fluffy."
+    puts " "
+    puts "[Your stats are:]"
+    puts "Attack: 4"
+    puts "Defense: 2"
+    puts "Speed: 7"
+    puts "Force: 0"
+    puts "Intelligence: 4"
+  elsif $answer == "bounty"
+    puts "Medical Droid:Ah, a Bounty Hunter. Well I hope there isn't a price on my head, he...hehe."
+    puts " "
+    puts "[Your stats are:]"
+    puts "Attack: 6"
+    puts "Defense: 8"
+    puts "Speed: 4"
+    puts "Force: 1"
+    puts "Intelligence: 8"
+  elsif $answer == "sith"
+    puts "Medical Droid: Oh...ok then. Well uh a sith, huh? Well remember I never harmed you in any way."
+    puts " "
+    puts "[Your stats are:]"
+    puts "Attack: 7"
+    puts "Defense: 5"
+    puts "Speed: 6"
+    puts "Force: 8"
+    puts "Intelligence: 8"
+  elsif $answer == "jawa"
+    puts "Medical Droid: Well look at that, a Jawa. Weird seeing you guys off of Tatooine."
+    puts " "
+    puts "[Your stats are:]"
+    puts "Attack: 2"
+    puts "Defense: 3"
+    puts "Force: 0"
+    puts "Intelligence: 9"
+  elsif $answer == "twilek"
+    puts "Medical Droid: Ok then, a Twi'lek. Nice head tentacles, by the way."
+    puts " "
+    puts "[Your stats are:]"
+    puts "Attack: 5"
+    puts "Defense: 6"
+    puts "Speed: 7" 
+    puts "Force: 5"
+    puts "Intelligence: 6"
+  elsif $answer == "trooper"
+    puts "Medical Droid: Of course you're a Stormtrooper, I'm dumb. I can tell from the armor in the locker there."
+    puts " "
+    puts "[Your stats are:]"
+    puts "Attack: 6"
+    puts "Defense: 4"
+    puts "Speed: 4"
+    puts "Force: 3"
+    puts "Intelligence: 6"
+  else
+    puts "Medical Droid: I'm sorry I didn't catch that, could you repeat that."
+    beginning
+  end
+end
+
+beginning
+
+sleep 5
+
+
+puts " "
+puts " "
+puts "*Suddenly you hear a boom. It's an Empire boarding party invading the cruiser!*"
+puts "*They have completely taken over the Cruiser and are eliminating as many people on the ship as they can.*"
+puts " "
+sleep 3
+puts "Medical Droid: Oh no, it's the Empire. They found us out here. I gotta get you out of that tank and somewhere
+safe."
+puts " "
+sleep 3
+puts "*The droid presses some buttons and drains the liquid from the tank. It opens and you fall out.*"
+puts "*He points towards the locker in the corner and tells you to go get your gear.*"
+puts " "
+
+sleep 3
+
+if $answer == "jedi"
+  puts "*You grab your robe and lightsaber from the locker.*" 
+elsif $answer == "ewok"
+  puts "*You grab your cloth and stone hammer from the locker.*"
+elsif $answer == "bounty"
+  puts "*You grab your battle armor and blaster from the locker*"
+elsif $answer == "sith"
+  puts "*You grab your cloak and lightsaber from the locker.*"
+elsif $answer == "jawa"
+  puts "*You grab your robe and blaster pistol from the locker.*"
+elsif $answer == "twilek"
+  puts "*You grab your clothing and sword from the locker.*"
+elsif $answer == "trooper"
+  puts "*You grab your storm trooper armor and blaster from the locker.*"
+end
+
+
+puts "Medical Droid: Sounds like they are breaking in here, you gotta hide."
+puts " "
+puts "*Do you choose the hide (hide) or fight (fight) the Empire troopers?"
+
+scene1 = gets.strip
+
+if scene1 == "hide"
+  puts "*You hide inside the locker you got your gear from. You watch as two stormtroopers break down the door."
+  puts "*They interrogate the droid on where you are. The droid says he does not know. The troopers destroy the droid.*"
+  puts "*You then exit the locker and inspect the droid, he is broken beyond repair. You sneak out of the room*"
+elsif scene1 == "fight"
+  puts "*You ready yourself for battle. As you stand ready two stormtroopers break in and point their 
+blasters at you*" 
+  puts "*You are in battle*"
+  sleep 2
+  $enemy = 2
+  fight
+end
+
+sleep 2
+
+puts "You make your way out of the room and think for a moment. You have to find the escape pods to get to
+the planet below the ship."
+puts "You see two directions to take, they look like they both exit to the same area. One of them may by helpful, though."
+
+sleep 2
+
+puts "Do you go right (right) or left (left)"
+scene2 = gets.strip.downcase
+
+if scene2 == "right"
+  puts "You go right and find and small First-Aid kit. You use it to heal any damage you've taken."
+  $player.health = 10
+  puts "You now have #{$player.health} hit points."
+elsif scene2 == "left"
+  puts "You go left and see a lone Stormtrooper searching this pathway for any survivors. He spots you
+  and you go into battle."
+  puts "You are now in battle"
+  sleep 2
+  $enemy =  1
+  fight
+end
+
+sleep 2
+
+puts "You make it past the intersection and continue your search for the escape pods."
+puts "You go straight and you see a small window to your right. Do you look out the window (window) or 
+continue straight (straight)?"
+
+side1 = gets.strip.downcase
+
+if side1 == "window"
+  puts "You go up to the window and glance out it. You see a small Empire fighter zooming right towards 
+  the ship in your direction. It fires it's lasers at the ship's window where you are. You try to run
+  away but the small explosion barely catches you"
+  $player.health -= 2
+  puts "You now have #{$player.health} hit points."
+  puts "The blast doors seal over the hull breach and you continue on."
+elsif side1 == "straight"
+  puts "You continue on your search for the escape pods and hear an explosion behind you."
+  puts "A fighter ship fired at the window you passed by. The hull breach was sealed by the blast doors."
+  puts "Good thing you didn't look out the window."
+end
+
+sleep 1
+
+puts "As you go through, you find a small hunting squad of two stormtroopers and one sith."
+puts "You can either fight (fight) them or try to run (run) to the nearest door."
+
+scene3 = gets.strip.downcase
+
+if scene3 == "fight"
+  puts "You decide to take your chance and enter in combat with the hunting squad."
+  puts "You are now in combat"
+  $enemy = 3
+  sleep 1
+  fight
+elsif scene3 == "run"
+  rand(10)
+  if rand(10) <= $player.speed
+    puts "You run as fast as you can to the door and barely make it in."
+  else 
+    puts "You try to run for the door, but a stormtrooper shoots the controls and locks it."
+    puts "You are now forced to fight the hunting squad."
+    sleep 1
+    $enemy = 3
+    fight 
+  end
+end
+
+sleep 2
+
+puts "After you make it pass the hunting squad, you continue down another corridor."
+puts "You walk past the armory and see that it is electronically locked."
+puts "Also there is a health pack on the opposite side of the room."
+puts "You only have time to get one of them because you hear some troopers coming behind you."
+puts "Do you go for the armory (armory) or the health pack (health)?"
+
+side2 = gets.strip.downcase
+
+if side2 == "armory"
+  rand(10)
+  if rand(10) <= $player.intelligence
+    puts "You rapidly try to hack into the door controls. After error upon error, you finally unlock it."
+    puts "Inside you find a health kit and some weapon upgrades. You grab them all and hide from the troopers."
+    $player.attack += 1
+    $player.health = 10
+  else 
+    puts "You try to unlock the door, but your efforts are futile. You hear the troopers rapidly approaching
+    and run to hide from them."
+    puts "After you hear the 10 man squad run by, you leave your hiding space and continue your search."
+  end
+elsif side2 == "health"
+  puts "You decide not to waste your time and go and quickly grab the health kit."
+  puts "You now have #{$player.health} hit points."
+  puts "After using it, you hide from the passing stormtroopers and wait for them to leave."
+end
+
+sleep 2
+
+puts "As you continue on, another 3 stormtroopers block your way. You are forced to fight them."
+fight
+
+sleep 1
+
+puts "After the battle, you make your way into the bridge. The dead captain has the code to the consoles
+on him."
+puts"You take the code and use it to log in to the consoles. As you go through the files, you find the ship map."
+puts "You print out the map and take it with you. Now you know where the escape pods are."
+
+sleep 2
+
+puts "You make your way out the other door and to the pods. As you walk, you hear a loud boom at the end of the ship."
+puts "They haven't captured you so the Empire has decided to blow up the ship to kill you."
+puts "You start to go into a fast jog through the ship. You see the doors to the escape pods."
+
+sleep 2
+
+puts "*BOOM*"
+
+sleep 1 
+
+puts "An explosion makes the ceiling collapse in front of you and it blocks your path."
+puts "A new path opens up to go all around the pod bay into the back door."
+puts "You know you probably can't but you think it's possible to use the force to move the collaped debris"
+puts "Do you take the new path (new) or try to use the force (force) [Note:]{Force requires a perfect 10 roll to work.
+and could backfire}"
+
+event1 = gets.strip.downcase
+
+if event1 == "force"
+  rand(10)
+  if rand(10) == 10
+    puts "Concentrating as hard as you can, you will hold your hands to the debris. You focus very hard on trying to lift it."
+    puts "After a minute of trying, the wreckage starts to budge, slowly it lifts up into the air. You were able to lift the
+    debris out of the way. You scoot under it and let it drop back down. The pod bay doors is right in fron of you."
+    puts "Before you go, you hack into a system control panel by the door and decide to rig the engines to explode
+    before the empire can escape the republic cruiser."
+    
+    sleep 3
+    
+    puts "Afterwards, you break open the doors, get into the nearest working escape pod, and jettison off the ship."
+    puts "As the pod drifts down to the planet, you look back and see the ship explode behind you."
+    puts "The attached Empire ship is caught in the engine explosion and you see it crumble along with the cruiser."
+    puts "Tired, you decide to drift off to sleep as the pod falls down to the planet below. You will probably be safe on Tatooine."
+    sleep 3
+    
+    puts "YOU WON!!! GOOD JOB!!!"
+    
+    sleep
+  else
+    puts "You try as hard as you can to lift the debris and get some of it to budge but one piece budges too much and comes straight
+    to your face and hits you."
+    puts "You lost 2 hp"
+    $player.health -= 2
+  end
+elsif event1 == "new"
+  puts "You decide it would be better to not waste your time trying to lift the debris out of the way and just go to the new path."
+end
+
+puts "After gathering your bearings, you make your way down the new path. You see a bunch of loose wiring and broken
+ship parts as you navegate it."
+puts "You then find the end of the path and see a door that's locked from the other side. since it won't
+budge you can either hack it open (hack), smash it down (smash), or knock (knock)."
+
+scene4 = gets.strip.downcase
+
+if scene4 == "hack"
+  rand(10)
+  if rand(10) <= $player.intelligence
+    puts "You use the loose panel to hack into the door mechanism and manage to get it open. It opens and 2 stormstoopers are on 
+    the other side of it and turn to face you. You done goofed."
+    "You are now in battle"
+    $enemy = 2
+    fight
+  else
+    puts "You try repeatedly to get it open but get mad at it and rip out some wires, they are still electrified 
+    and you can use those to help you fight. Gain +1 to attack"
+    $player.attack += 1
+    puts "The door however is kicked down in your face by 2 stormtroopers and you lose 1 hp"
+    $player.health -= 1
+    puts "After you pick yourself up, you engage in battle with the stormtroopers."
+    puts "You are in battle"
+    $enemy = 2
+    fight
+  end
+elsif scene4 == "smash"
+  rand(10)
+  if rand(10) <= $player.attack
+    puts "You back up a few steps and then charge at the door. You hop up and kick it down with both your feet
+    and it comes crashing open. The doors seem to have knocked out 2 stormtroopers guarding it too."
+    puts "You start to jog forward and get to the back door for the pod bay. You open it up and see an empty,
+    usable escape pod."
+    
+    sleep 2
+    
+    puts "Before you go, you hack into a system control panel by the door and decide to rig the engines to explode
+    before the empire can escape from the republic cruiser."
+        
+    sleep 3
+        
+    puts "Afterwards, you break open the doors, get into the nearest working escape pod, and jettison off the ship."
+    puts "As the pod drifts down to the planet, you look back and see the ship explode behind you."
+    puts "The attached Empire ship is caught in the engine explosion and you see it crumble along with the cruiser."
+    puts "Tired, you decide to drift off to sleep as the pod falls down to the planet below. You will probably be safe on Tatooine."
+    sleep 3
+    
+    puts "YOU WON!!! GOOD JOB!!!"
+    
+    sleep
+  else
+    puts "You charge at the door and leap up at it. You try to break it down, but end up slamming yourself against it.
+    and lose 1 hp from that."
+    $player.health -= 1
+    puts "After you get up, the doors swing open and two stormtroopers are there, they must have heard the loud thud."
+    puts "You have no way to get around them and must fight them."
+    puts "You are now in battle."
+    $enemy = 2
+    fight
+  end
+  puts "After that, you make your way to the back door of the pod bay and open it to see a workign escape pod"
+  puts "Before you go, you hack into a system control panel by the door and decide to rig the engines to explode
+  before the empire can escape from the republic cruiser."
+      
+  sleep 3
+      
+  puts "Afterwards, you break open the doors, get into the nearest working escape pod, and jettison off the ship."
+  puts "As the pod drifts down to the planet, you look back and see the ship explode behind you."
+  puts "The attached Empire ship is caught in the engine explosion and you see it crumble along with the cruiser."
+  puts "Tired, you decide to drift off to sleep as the pod falls down to the planet below. You will probably be safe on Tatooine."
+  sleep 3
+      
+  puts "YOU WON!!! GOOD JOB!!!"
+      
+  sleep
+elsif scene4 == "knock"
+  puts "You knock on the door and someone replies, who is it? You say it's a survivor."
+  puts "Two stormtroopers open the door and point their guns at you. I don't know how you thought that would work out for you."
+  puts "You are now in battle."
+  $enemy = 2
+  fight
+end
+
+sleep 2
+
+puts "Afterwards, you run to the back doors of the pod bay and open them to see 1 working escape pod."
+puts "Before you go, you hack into a system control panel by the door and decide to rig the engines to explode
+before the empire can escape from the republic cruiser."
+    
+sleep 3
+    
+puts "Afterwards, you break open the doors, get into the nearest working escape pod, and jettison off the ship."
+puts "As the pod drifts down to the planet, you look back and see the ship explode behind you."
+puts "The attached Empire ship is caught in the engine explosion and you see it crumble along with the cruiser."
+puts "Tired, you decide to drift off to sleep as the pod falls down to the planet below. You will probably be safe on Tatooine."
+sleep 3
+    
+puts "YOU WON!!! GOOD JOB!!!"
+    
+sleep
